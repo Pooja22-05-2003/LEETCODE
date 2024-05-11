@@ -1,3 +1,11 @@
+/*
+Insertion: The time complexity of inserting a word into the Trie is O(m), where m is the length of the word. This is because in the worst case, we may need to traverse through all the characters of the word to insert it into the Trie.
+
+Search: The time complexity of searching for a word in the Trie is O(m), where m is the length of the word being searched for. Similar to insertion, in the worst case, we may need to traverse through all the characters of the word to find it in the Trie.
+
+Starts With: The time complexity of checking whether the Trie contains any word with a given prefix is also O(m), where m is the length of the prefix. As with insertion and search, in the worst case, we may need to traverse through all the characters of the prefix to determine if it exists as a prefix of any word in the Trie.
+
+*/
 class Trie {
 public:
     
