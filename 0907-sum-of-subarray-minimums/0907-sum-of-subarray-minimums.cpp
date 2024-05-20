@@ -1,3 +1,5 @@
+// TC=O(3*n)==O(n)
+// SC=O(2*n)==O(n)
 class Solution {
 public:
     void NSL(vector<int>& arr,vector<int>&NextSmallerLeft)
