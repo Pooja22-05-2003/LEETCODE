@@ -45,6 +45,7 @@ public:
         }
         
         reverse(res.begin(),res.end());
-        return (res=="")?"0":res;
+        return (res=="")?"0":res; // This is the edge case["10"
+                                                        //  1], here output is "0" and not ""
     }
 };
