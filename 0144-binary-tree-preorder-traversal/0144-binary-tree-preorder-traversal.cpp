@@ -9,6 +9,9 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+// TC=O(N)
+// SC=O(H) [Recursion stack space]
 class Solution {
 public:
     void solve(TreeNode* root, vector<int>&ans)
