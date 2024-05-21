@@ -11,7 +11,8 @@
  */
 
 // Iterative Preorder Traversal
-
+// TC=O(n)
+// SC=O(n) in worst case , when tree skewed and each node have only one right and left(subtree), no right substree
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
