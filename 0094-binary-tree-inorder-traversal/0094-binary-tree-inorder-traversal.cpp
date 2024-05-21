@@ -11,6 +11,8 @@
  */
 
 // Inorder Traversal= left root right
+// TC=O(N)
+// SC=O(N)
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
