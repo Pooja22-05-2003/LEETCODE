@@ -10,22 +10,38 @@
  * };
  */
 
-// TC=O(N)
-// SC=O(H) [Recursion stack space]
+// Inorder Traversal= left root right
 class Solution {
 public:
-     void solve(TreeNode* root, vector<int>&ans)
-    {
-        if(root==NULL) return;
+    vector<int> inorderTraversal(TreeNode* root) {
+        
+        stack<TreeNode*>st;
+        vector<int>ans;
+        
+        if(root==NULL) return ans;
+        TreeNode* curr=root;
         
        
-        solve(root->left,ans);
-        ans.push_back(root->val);
-        solve(root->right,ans);
-    }
-    vector<int> inorderTraversal(TreeNode* root) {
-         vector<int> ans;
-         solve(root,ans);
+        
+        while(true)   // ⭐⭐Here while(!st.empty condition is false because initially , I have not pushed any val)
+        {  
+           if(curr==NULL)
+           {
+               // check whether the stack is empty or not
+               if(st.empty()) break;
+               curr=st.top();
+               st.pop();
+               cout<<"curr->val:"<<curr->val<<endl;
+               ans.push_back(curr->val);
+               curr=curr->right;
+           }
+            else
+            {
+                st.push(curr);
+                curr=curr->left;
+            }
+        }
+        
         return ans;
     }
 };
