@@ -10,21 +10,27 @@
  * };
  */
 
-// TC=O(N)
-// SC=O(H) [Recursion stack space]
+// Iterative Preorder Traversal
+
 class Solution {
 public:
-    void solve(TreeNode* root, vector<int>&ans)
-    {
-        if(root==NULL) return;
-        
-        ans.push_back(root->val);
-        solve(root->left,ans);
-        solve(root->right,ans);
-    }
     vector<int> preorderTraversal(TreeNode* root) {
-       vector<int> ans;
-       solve(root,ans);
+        vector<int>ans; 
+        if(root==NULL) return ans;
+        
+        stack<TreeNode*>st;
+        st.push(root);
+        
+        while(!st.empty())
+        {
+            auto curr=st.top(); st.pop();
+            ans.push_back(curr->val);
+            
+            if(curr->right) st.push(curr->right); // order is root left right , so if u will push left at last , then only it will come first out.
+            if(curr->left) st.push(curr->left);
+        
+            
+        }
         return ans;
     }
 };
