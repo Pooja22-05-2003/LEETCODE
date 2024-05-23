@@ -15,7 +15,7 @@ public:
     {
         if(leftnode==NULL && rightnode==NULL) return true;
         if((!leftnode && rightnode) || (leftnode && !rightnode)) return false;
-        if((leftnode && rightnode)&& (leftnode->val!=rightnode->val)) return false;
+        if((leftnode->val!=rightnode->val)) return false;
         
         bool leftans=helper(leftnode->left,rightnode->right);
         bool rightans=helper(leftnode->right, rightnode->left);
