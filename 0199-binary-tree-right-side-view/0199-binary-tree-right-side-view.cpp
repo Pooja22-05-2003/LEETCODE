@@ -10,36 +10,29 @@
  * };
  */
 
-// Approach 1:
-// Using Level Wise Traversal
-// Put the last node in the ans vector at each level.
+// Approach 2: (Using DFS )
+/*
+While reaching any level , check if the size of the array is smaller than the ans.size, then push that element , else not push it.
+*/
 
 // Tc=O(N)
 // SC=O(N)
 class Solution {
 public:
+    void preorder(TreeNode* root, int level, vector<int>&ans)
+    {
+        if(root==NULL) return;
+        
+        if(ans.size()<level) ans.push_back(root->val);
+        
+        // We are doing preorder (root, left right), but changing little because we need to traverse the right side view , so first put the right node first, the  left node.
+        preorder(root->right,level+1,ans);
+        preorder(root->left, level+1,ans);
+    }
     vector<int> rightSideView(TreeNode* root) {
-        if(root==NULL) return {};
-        queue<TreeNode*>q;
-        q.push(root);
         
         vector<int>ans;
-        while(!q.empty())
-        {
-            int n=q.size();
-            TreeNode* curr=NULL;
-            for(int i=0;i<n;i++)
-            {
-                curr=q.front();
-                q.pop();
-                
-                if(curr->left) q.push(curr->left);
-                if(curr->right) q.push(curr->right);
-            }
-            
-            ans.push_back(curr->val);
-        }
-        
+        preorder(root,1,ans);
         return ans;
         
     }
