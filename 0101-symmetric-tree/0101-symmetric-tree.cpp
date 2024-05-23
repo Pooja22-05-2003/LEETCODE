@@ -9,6 +9,8 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+// TC=O(N)
+// SC=O(N)
 class Solution {
 public:
     bool helper(TreeNode* leftnode, TreeNode* rightnode)
