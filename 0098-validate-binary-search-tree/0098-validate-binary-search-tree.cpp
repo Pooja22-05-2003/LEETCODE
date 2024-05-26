@@ -9,30 +9,33 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-
-// TC=O(N)
-// SC=O(N)
+// TC=O(n)
+// SC=O(n)
 class Solution {
 public:
-     void solve(TreeNode* root, vector<int>&arr)
+    bool solve( TreeNode * root,  long long int min, long long int max)
     {
-        if(root==NULL) return;
+        if(root==NULL) return true;
         
-        solve(root->left,arr);
-        arr.push_back(root->val);
-        solve(root->right,arr);
-              
+        if(root->val<=min || root->val>=max) return false;
+        
+        return solve(root->left,min,root->val) && solve(root->right,root->val,max);
+    }
+    bool isValidBST(TreeNode* root) {
+        long long int min=-10000000000009;
+        long long int max=10000000000009;
+        return solve(root,min,max);
+      
     }
     
-    bool isValidBST(TreeNode* root) {
-        vector<int>arr;
-        solve(root,arr);
-        
-        // find that the inorder traversal is sorted or not, if not sorted that return false
-        for(int i=0;i<arr.size()-1;i++)
-        {
-            if(arr[i]>=arr[i+1]) return false;
-        }
-        return true;
-    }
+    //  bool  isPossible (TreeNode * root, long long int min,long long int max){
+    //     if(root==NULL) return true;
+    //     if((root->val >min && root->val <max) )return isPossible(root->left,min,root->val) && isPossible (root->right, root->val,max) ;
+    //     else return false;
+    // }
+    // bool isValidBST(TreeNode* root) {
+    //     long long int min=-100000000000000;
+    //     long long int max=10000000000000;
+    //     return isPossible(root,min,max);
+    // }
 };
