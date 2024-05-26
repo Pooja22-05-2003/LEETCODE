@@ -10,29 +10,39 @@
  * };
  */
 /*
-1st Appproach : 
+2nd (Optimal Appproach) : 
 Brute Force Approach:
-1. Property of BST- It return the traversal in sorted manner, means our arr is sorted
-2. At the end of the traversal return arr[k-1] el which is our kth smallest element.
+1. Property of BST- It return the traversal in sorted manner, Instead of arr , use the cnt variable
+2.while doing the inorder traversal (if the cnt==k) return that node.
 
 */
 
-// TC=O(nlogn) // sorting
-// SC=O(n) // storing the element in the vector.
+// TC=O(n) 
+// SC=O(h) 
 class Solution {
 public:
-    void solve(TreeNode* root, vector<int>&arr)
+    void solve(TreeNode* root, int&cnt,int &k, int &ans)
     {
-        if(root==NULL) return;
+        if(root==NULL) return ;
         
-        solve(root->left,arr);
-        arr.push_back(root->val);
-        solve(root->right,arr);
+        solve(root->left,cnt,k,ans);
+        cnt++;
+        if(cnt==k)
+        {
+             ans=root->val; 
+            return;
+        }
+        // arr.push_back(root->val);
+        solve(root->right,cnt,k,ans);
+        
+       
               
     }
     int kthSmallest(TreeNode* root, int k) {
-        vector<int>arr;
-        solve(root,arr);
-        return arr[k-1];
+        int cnt=0;
+        int ans=0;
+        solve(root,cnt,k,ans);
+        return ans;
+     
     }
 };
