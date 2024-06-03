@@ -11,7 +11,8 @@ public:
         
         for(int j=0;j<=amount;j++)
         {
-            if ((j%coins[0])==0) dp[0][j] = j/coins[0];
+            if ((j%coins[0])==0) dp[0][j] = j/coins[0]; //⭐⭐Mistake , here u did wrong and instead of j , u  used the amount variable.
+//             so pls use the jth variable.
         }
         
         for(int ind=1;ind<n;ind++)
