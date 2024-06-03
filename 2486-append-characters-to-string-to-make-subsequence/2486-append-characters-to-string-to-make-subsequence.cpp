@@ -1,3 +1,6 @@
+// Two Pointer
+// TC=O(n)
+// SC=O(1)
 class Solution {
 public:
     int appendCharacters(string s, string t) {
