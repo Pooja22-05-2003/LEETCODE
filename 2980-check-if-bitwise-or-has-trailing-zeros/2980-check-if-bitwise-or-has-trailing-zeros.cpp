@@ -1,21 +1,14 @@
 class Solution {
 public:
     bool hasTrailingZeros(vector<int>& nums) {
-        bool ans=false;
+       
         int n=nums.size();
+        int cnt=0;
         for(int i=0;i<nums.size();i++)
         {
-            int x=nums[i];
-            for(int j=i+1;j<n;j++)
-            {
-                int y=nums[j];
-                int z=x|y;
-                   // cout<<"x:"<<x<<" y:"<<y<<" z:"<<z<<" op:"<<(((z>>1)&1)==0)<<endl;
-                if(((z&1)==0)) return true;
-              
-            }
+           if((nums[i]&1)==0) cnt++; // must put brackets around (nums[i]&1)
         }
         
-        return false;
+        return (cnt>=2)?1:0;
     }
 };
