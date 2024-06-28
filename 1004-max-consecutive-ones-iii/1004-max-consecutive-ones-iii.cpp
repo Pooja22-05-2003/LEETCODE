@@ -1,3 +1,6 @@
+// TC=O(N)+O(N)=O(2N)=O(N)
+// SC=O(1)
+
 class Solution {
 public:
     int longestOnes(vector<int>& nums, int k) {
