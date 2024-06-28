@@ -17,7 +17,7 @@ public:
             else if (s[j] == 'c') cntc++;
 
             while (valid(cnta, cntb, cntc)) {
-                res += (n - j); // All substrings from i to n are valid when valid(cnta, cntb, cntc) is true
+                res += (n - j); // All substrings from j to n are valid when valid(cnta, cntb, cntc) is true
                 if (s[i] == 'a') cnta--;
                 else if (s[i] == 'b') cntb--;
                 else if (s[i] == 'c') cntc--;
