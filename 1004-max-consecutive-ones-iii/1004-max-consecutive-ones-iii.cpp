@@ -14,7 +14,7 @@ public:
         //     }
         // }
         
-        if(k==0)
+        if(k==0) // edge case
         {
             int maxlen=0;
             int len=0;
