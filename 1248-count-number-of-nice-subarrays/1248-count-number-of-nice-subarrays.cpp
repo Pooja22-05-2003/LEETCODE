@@ -1,33 +1,52 @@
 class Solution {
 public:
-    int numberOfSubarrays(vector<int>& nums, int k) {
-        // convert the odd numbers->1
-        // convert the even numbers -> 0
+     int numSubarraysWithSum(vector<int>& nums, int k) {
         
         int n=nums.size();
-        
-        for(int i=0;i<n;i++)
-        {
-            if(nums[i]%2==0) nums[i]=0;
-            else nums[i]=1;
-        }
-        
-        // count the number of subarray having sum equal to k
-        
-        unordered_map<int,int>mp;
-        mp[0]=1;
-        
+        int i=0;
+        int j=0;
+        int res=0;
         int sum=0;
-        int cnt=0;
-        for(int i=0;i<n;i++)
+        int cnt0=0;
+        while(j<n)
         {
-            sum+=nums[i];
+            sum+=nums[j];
             
-            if(mp.find(sum-k)!=mp.end()) cnt+=mp[sum-k];
-            
-            mp[sum]++;
+            while(i<j && (nums[i]==0 || (sum>k)))
+            {
+                if(nums[i]==0) cnt0++;
+                else 
+                {
+                    // cout<<"i:"<<i<<endl;
+                    // This else is needed because without this, it will fail on the below test case
+                    
+                    // [0,1,1,1,1]
+                    // Correct output:3
+                    cnt0=0;
+                }
+                
+                sum-=nums[i];
+                i++;
+            }
+           
+            if(sum==k) res=res+1+cnt0; 
+            j++;
+           
         }
+        return res;
+    }
+    int numberOfSubarrays(vector<int>& nums, int k) {
+        // convert odd numbers to 1, then this que is exactly similat to prev ques
+        //930. Binary Subarrays With Sum
         
-        return cnt;
+       vector<int>arr(nums.size());
+        
+       for(int i=0;i<nums.size();i++)
+       {
+           if(nums[i]%2==0) arr[i]=0;
+           else arr[i]=1;
+       }
+        
+       return numSubarraysWithSum(arr,k);
     }
 };
