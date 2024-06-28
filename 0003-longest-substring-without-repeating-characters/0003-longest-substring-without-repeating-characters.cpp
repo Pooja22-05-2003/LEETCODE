@@ -6,25 +6,36 @@ public:
         // if(s==" " ) return 1;
         int maxlen=1;
         unordered_map<char,int>mp;
-        
-        for(int i=0;i<n;i++)
-        {
-            int len=1;
-            mp[s[i]]++;
+        int i=0;
+        // int len=0;
+        while(i<n)
+        { 
+            mp[s[i]]=i;
+            // len++;
             
-            for(int j=i+1;j<n;j++)
+            int j=i+1;
+            while(j<n)
             {
                 if(mp.find(s[j])!=mp.end())
                 {
+                    // cout<<"i:"<<i<<" j:"<<j<<endl;
+                    i=mp[s[j]];
                     mp.clear();
-                    len=1;
+                    // i=j-1;
+                    // len--;
+              
                     break;
                     
                 }
+                 // len++;
                 maxlen=max(maxlen,j-i+1);// i to j-1 is valid
                 
-                mp[s[j]]++;
+                mp[s[j]]=j;
+               
+                j++;
             }
+            cout<<"i:"<<i<<endl;
+            i++;
         }
         
         return maxlen;
