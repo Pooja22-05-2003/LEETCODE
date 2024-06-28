@@ -15,7 +15,15 @@ public:
             while(i<j && (nums[i]==0 || (sum>k)))
             {
                 if(nums[i]==0) cnt0++;
-                else cnt0=0;
+                else 
+                {
+                    // cout<<"i:"<<i<<endl;
+                    // This else is needed because without this, it will fail on the below test case
+                    
+                    // [0,1,1,1,1]
+                    // Correct output:3
+                    cnt0=0;
+                }
                 
                 sum-=nums[i];
                 i++;
