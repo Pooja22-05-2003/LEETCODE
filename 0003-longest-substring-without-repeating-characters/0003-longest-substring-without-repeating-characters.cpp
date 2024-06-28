@@ -1,5 +1,11 @@
 // TC=O(N)
 // SC=O(1)
+
+/*
+Amazon-49, Microsoft-29,Facebook-23,Bloomberg-23,Apple-16
+Google-13,Spotify-10,Adobe-6,Uber-5,VMware-5,Yahoo-4,Goldman Sachs-4,Oracle-4,Walmart Global Tech-3,Salesforce-3,Paypal-2,Samsung-2,Intuit-2,Yandex-2,Zoho-2,JPMorgan-2
+*/
+
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
