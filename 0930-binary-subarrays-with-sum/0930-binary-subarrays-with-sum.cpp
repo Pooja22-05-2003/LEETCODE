@@ -1,20 +1,29 @@
 class Solution {
 public:
     int numSubarraysWithSum(vector<int>& nums, int k) {
-        unordered_map<int,int>mp;
-        mp[0]=1;
+        
+        int n=nums.size();
+        int i=0;
+        int j=0;
         int res=0;
         int sum=0;
-        for(int i=0;i<nums.size();i++)
+        int cnt0=0;
+        while(j<n)
         {
-            sum+=nums[i];
-            cout<<"sum:"<<sum<<endl;
-            if(mp.find(sum-k)!=mp.end())
+            sum+=nums[j];
+            
+            while(i<j && (nums[i]==0 || (sum>k)))
             {
-                // cout<<"i:"<<i<<endl;
-              res+=mp[sum-k];  
+                if(nums[i]==0) cnt0++;
+                else cnt0=0;
+                
+                sum-=nums[i];
+                i++;
             }
-            mp[sum]++;
+           
+            if(sum==k) res=res+1+cnt0; 
+            j++;
+           
         }
         return res;
     }
