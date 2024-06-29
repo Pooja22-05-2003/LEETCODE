@@ -22,9 +22,11 @@ public:
             {
                 
                 reqCount--;
+                   
             }
             
-            mp[s[j]]--;
+            mp[s[j]]--; // ⭐This condition need to come out of the if because if the character is not present in t, then also we are decreasing its frequency and it was going in -ve.
+         
             
             while(reqCount==0)
             {
@@ -38,7 +40,7 @@ public:
                 mp[s[i]]++;
               
                 
-                if(mp[s[i]]>0) reqCount++;
+                if(mp[s[i]]>0) reqCount++; // ⭐This if condition is needed, because if some char freq is -2 and i did ++ so it get -1 but this character is not present in the target t, so we will not add it in the reqCount.
                   i++;
             }
             j++;
