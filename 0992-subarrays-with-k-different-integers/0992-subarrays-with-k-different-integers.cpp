@@ -22,7 +22,7 @@ public:
                 if(mp[nums[i]]==0) mp.erase(nums[i]);
                 i++;
             }
-            res+=(j-i+1);  // it will store all the subarray of size <=k
+            res+=(j-i+1);  // it will add all the subarray of size <=k ending at index j
             j++;
         }
         
