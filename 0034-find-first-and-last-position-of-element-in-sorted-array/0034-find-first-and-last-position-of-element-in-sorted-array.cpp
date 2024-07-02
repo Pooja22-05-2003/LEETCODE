@@ -1,45 +1,57 @@
+
+
+// TC=O(nlogn)
+// SC=O(1)
+
 class Solution {
 public:
-    vector<int> searchRange(vector<int>& nums, int target) {
-        int n=nums.size();
+    int FirstOccurence(vector<int>& nums, int target){
+        int FirstIndex=-1;
         int st=0;
-        int end=n-1;
-        
-        int l=-1;
-        int r=-1;
-        while(st<=end)
-        {
+        int end=nums.size()-1;
+        while(st<=end){
             int mid=(st+end)/2;
-            
-            if(nums[mid]==target)
-            {
-                // find the first and last occ
-                
-                int x=mid;
-                l=x;r=x;
-                while(x>=0 && nums[x]==target)
-                {
-                    l=x;
-                    x--;
-                }
-                
-                int y=mid;
-                
-                while(y<n && nums[y]==target)
-                {
-                    r=y;
-                    y++;
-                }
-                
-                return {l,r};
+            cout<<"mid:"<<mid<<endl;
+            if(nums[mid]==target){
+                FirstIndex=mid;
+                end=mid-1;//// ⭐Here need to find the first occurent , so move end towards left.
             }
-            else if(nums[mid]<target)
-            {
+            else if (nums[mid]>target){
+                end=mid-1;
+            }
+            else {
                 st=mid+1;
             }
-            else end=mid-1;
         }
-        
-        return {l,r};
+
+        return FirstIndex;
+    }
+
+    int LastOccurence(vector<int>& nums, int target){
+        int Lastindex=-1;
+        int st=0;
+        int end=nums.size()-1;
+        while(st<=end){
+            int mid=(st+end)/2;
+            if(nums[mid]==target){
+                Lastindex=mid;
+                st=mid+1; // ⭐Here need to find the last occurent , so move st towards //right.
+            }
+            else if (nums[mid]>target){
+                end=mid-1;
+            }
+            else {
+                st=mid+1;
+            }
+        }
+
+        return Lastindex;
+    }
+
+    
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int FirstIndex=FirstOccurence(nums,target);
+        int Lastindex =LastOccurence(nums,target);
+        return {FirstIndex , Lastindex};
     }
 };
