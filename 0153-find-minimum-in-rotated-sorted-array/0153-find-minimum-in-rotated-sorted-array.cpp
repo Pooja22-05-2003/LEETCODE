@@ -11,7 +11,7 @@ public:
         while(st<=end)
         {
             int mid=(st+end)/2;
-            ans=min(ans,nums[mid]);
+            ans=min(ans,nums[mid]); // ⭐Must add this condition
             // check whether left part is sorted?
             if(nums[st]<=nums[mid]) {
                 ans=min(ans,nums[st]); //...in the sorted part minimum element is always the first element.
