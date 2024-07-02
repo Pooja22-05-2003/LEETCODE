@@ -14,9 +14,21 @@ public:
             if(arr[mid][0]<=target && arr[mid][m-1]>=target)
             {
                 
-                for(int i=0;i<m;i++) 
+//                 for(int i=0;i<m;i++) 
+//                 {
+//                     if(arr[mid][i]==target) return true;
+//                 }
+//                 return false;
+                
+                int low=0;
+                int high=m-1;
+                
+                while(low<=high)
                 {
-                    if(arr[mid][i]==target) return true;
+                    int r=(low+high)/2;
+                    if(arr[mid][r]==target) return true;
+                    if(arr[mid][r]<target) low=r+1;
+                    else high=r-1;
                 }
                 return false;
                 
