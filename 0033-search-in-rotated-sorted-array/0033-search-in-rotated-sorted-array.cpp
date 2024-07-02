@@ -15,7 +15,7 @@ public:
             if(nums[st]<=nums[mid])
             {
                 // left part is sorted
-                if(nums[mid]>target && nums[st]<=target)
+                if(nums[mid]>=target && nums[st]<=target)
                 {
                     end=mid-1;
                 }
@@ -24,7 +24,7 @@ public:
             else
             {
                 // right part is sorted
-                 if(nums[mid]<target && nums[end]>=target)
+                 if(nums[mid]<=target && nums[end]>=target)
                 {
                     st=mid+1;
                 }
