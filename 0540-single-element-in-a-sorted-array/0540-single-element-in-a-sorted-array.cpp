@@ -32,7 +32,7 @@ public:
             }
         }
     
-    return arr[st];
+    return arr[end];
             
     }
 };
