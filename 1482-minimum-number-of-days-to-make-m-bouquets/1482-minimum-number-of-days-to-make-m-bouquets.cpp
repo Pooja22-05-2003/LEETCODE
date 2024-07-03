@@ -38,7 +38,7 @@ public:
     int minDays(vector<int>& bloomDay, int m, int k) {
         int n=bloomDay.size();
         // long long  flowers_needed=(m*k);
-        // if(flowers_needed>n) return -1;
+        // if(flowers_needed>n) return -1; //⭐⭐This condition is not needed, for large case it was goin the integer overflow in multipcaiton (10^5*10^5) is so large.
         
         int maxx=*max_element(bloomDay.begin(),bloomDay.end());
         // for(int day=1;day<=maxx;day++)
