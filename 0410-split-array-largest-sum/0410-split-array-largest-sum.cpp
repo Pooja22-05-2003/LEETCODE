@@ -4,12 +4,12 @@ public:
     bool check(int sum, vector<int>&nums, int k)
     {
         int cnt=1;
-        if(nums[0]>sum) return false;//////////
+        if(nums[0]>sum) return false;//////////Edge case 1.⭐
         int s=nums[0];
         
         for(int i=1;i<nums.size();i++)
         {
-            if(nums[i]>sum) return false;//////////
+            if(nums[i]>sum) return false;//////////Edge case 2⭐
             if((nums[i]+s)<=sum)
             {
                 s+=nums[i];
@@ -24,7 +24,7 @@ public:
         }
         
         // cout<<"sum:"<<sum<<" cnt:"<<cnt<<endl;
-        if(cnt<=k) return true;  // I used >=k , but it is incorrect, correction condition is (cnt<=k)
+        if(cnt<=k) return true; //////////Edge case 3⭐ // I used >=k , but it is incorrect, correction condition is (cnt<=k)
         else return false;
     }
     int splitArray(vector<int>& nums, int k) {
@@ -51,7 +51,7 @@ public:
         
         
         int st=minEl;
-        int end=sum;
+        int end=sum; //////////Edge case 4-end range of the ans can go upto sum⭐
         
         while(st<=end)
         {
