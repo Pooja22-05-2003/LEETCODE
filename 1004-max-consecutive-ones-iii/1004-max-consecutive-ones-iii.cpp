@@ -18,7 +18,7 @@ public:
         {
             if(nums[j]==0) cnt0++;
             
-            if(cnt0>k)
+            while(i<j && cnt0>k )
             {
                 if(nums[i]==0) cnt0--;
                 i++;
