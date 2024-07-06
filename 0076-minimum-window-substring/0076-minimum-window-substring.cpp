@@ -1,52 +1,47 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
-        
+        int n=s.size();
         unordered_map<char,int>mp;
         
-        for(int i=0;i<t.size();i++)
-        {
-            mp[t[i]]++;
-        }
+        for(auto it: t) mp[it]++;
         
-        int j=0;
         int i=0;
-        int n=s.size();
+        int j=0;
         
-        int reqCount=t.size();
+        int reqlen=t.size();
         int minlen=INT_MAX;
-        int minStart=-1;
+        int minSt=-1;
+        
         while(j<n)
         {
-            if(mp[s[j]]>0)
-            {
-                
-                reqCount--;
-                   
-            }
+            if(mp[s[j]]>0) reqlen--;
             
-            mp[s[j]]--; // ⭐This condition need to come out of the if because if the character is not present in t, then also we are decreasing its frequency and it was going in -ve.
-         
+            mp[s[j]]--;
             
-            while(reqCount==0)
+            while(reqlen==0)    
             {
-                // maintain the start of the minlength substring
-                if(minlen>(j-i+1))
+                if(j-i+1<minlen)
                 {
                     minlen=j-i+1;
-                    minStart=i;
+                    minSt=i;
                 }
                 
                 mp[s[i]]++;
-              
                 
-                if(mp[s[i]]>0) reqCount++; // ⭐This if condition is needed, because if some char freq is -2 and i did ++ so it get -1 but this character is not present in the target t, so we will not add it in the reqCount.
-                  i++;
+                if(mp[s[i]]>0)
+                {
+                    reqlen++;
+                }
+                
+                i++;
             }
+        
+            
             j++;
         }
         
-        if(minlen==INT_MAX) return "";
-        else return s.substr(minStart,minlen);
+        if(minSt==-1) return "";
+        else return s.substr(minSt,minlen);
     }
 };
