@@ -1,43 +1,36 @@
+// Two pointer
+// TC=O(n)
+// SC=O(1)
 class Solution {
 public:
     int trap(vector<int>& arr) {
-        int n=arr.size();
-        vector<int>prefix(n,0);
-        vector<int>suffix(n,0);
+        int left=0;
+        int right=arr.size()-1;
         
-        int leftmax=0;
+        int leftmax=INT_MIN;
+        int rightmax=INT_MIN;
         
-        for(int i=0;i<n;i++)
-        {
-            leftmax=max(leftmax,arr[i]);
-            prefix[i]=leftmax;
-        }
-        
-        int rightmax=0;
-        
-        for(int i=n-1;i>=0;i--)
-        {
-            rightmax=max(rightmax,arr[i]);
-            suffix[i]=rightmax;
-        }
-        
-//         for(int i=0;i<n;i++)
-//         {
-//             cout<<prefix[i]<<",";
-//         }
-//         cout<<endl;
-        
-//          for(int i=0;i<n;i++)
-//         {
-//             cout<<suffix[i]<<",";
-//         }
-        cout<<endl;
         int res=0;
-        for(int i=1;i<n-1;i++)
+        while(left<right)
         {
-            int temp=min(prefix[i],suffix[i])-arr[i];
-            if(temp>=0) res+=temp;
-            // cout<<"i:"<<i<<" res:"<<min(prefix[i],suffix[i+1])-arr[i]<<endl;
+            if(arr[left]>=arr[right])
+            {
+                // water stored in the right
+                if(arr[right]>=rightmax) rightmax=arr[right];
+                
+                else res+=(rightmax-arr[right]);
+                // cout<<"right"<<(rightmax-arr[right])<<endl;
+                right--;
+            }
+            else
+            {
+                // water stored in the left
+                if(arr[left]>=leftmax) leftmax=arr[left];
+               
+                else res+=(leftmax-arr[left]);
+                cout<<"left:"<<(leftmax-arr[left])<<endl;
+                left++;
+            }
         }
         
         return res;
