@@ -1,40 +1,41 @@
+// TC=O(size1+size2)
+// SC=O(size2)
 class Solution {
 public:
-    int findnextgreater(vector<int>arr, int el, int ind)
-    {
-        int i=0;
-        for(i=ind+1;i<arr.size();i++)
-        {
-            if(arr[i]>el) return i;
-        }
-        
-        return -1;
-    }
     vector<int> nextGreaterElement(vector<int>& arr1, vector<int>& arr2) {
-        int size1=arr1.size();
-        int size2=arr2.size();
-        
-        vector<int>ans(size1,-1);
-        
         unordered_map<int,int>mp;
+        vector<int>ans(arr1.size(),-1);
+        stack<int>st;
         
-        for(int i=0;i<size2;i++)
+        // O(n+n) // O(2*size2)
+        for(int i=arr2.size()-1;i>=0;i--)
         {
-            mp[arr2[i]]=i;
+            if(i==arr2.size()-1) 
+            {
+                st.push(arr2[i]);
+                mp[arr2[i]]=-1;
+            }
+            else
+            {
+              while(!st.empty() && st.top()<arr2[i]) st.pop();
+              
+              if(!st.empty()) mp[arr2[i]]=st.top();
+              else mp[arr2[i]]=-1;
+                
+              st.push(arr2[i]);
+            }
         }
         
-        for(int i=0;i<size1;i++)
+        
+        // O(size1)
+        for(int i=0;i<arr1.size();i++)
         {
-            int el=arr1[i];
-            int ind=mp[el];
+            int a=mp[arr1[i]];
+            if(a==-1){}
+            else ans[i]=a;
             
-            int ind2=findnextgreater(arr2,el,ind);
-            
-            if(ind2>=ind && ind2<size2) ans[i]=arr2[ind2];
-           
-        }    
+        }
         
         return ans;
-            
     }
 };
