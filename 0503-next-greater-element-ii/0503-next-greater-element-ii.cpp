@@ -1,3 +1,5 @@
+// TC=O(2*n)
+// SC=O(2*n)
 class Solution {
 public:
     vector<int> nextGreaterElements(vector<int>& nums) {
