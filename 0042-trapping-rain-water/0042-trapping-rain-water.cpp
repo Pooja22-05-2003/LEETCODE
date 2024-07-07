@@ -35,7 +35,7 @@ public:
         int res=0;
         for(int i=1;i<n-1;i++)
         {
-            int temp=min(prefix[i],suffix[i+1])-arr[i];
+            int temp=min(prefix[i],suffix[i])-arr[i];
             if(temp>=0) res+=temp;
             // cout<<"i:"<<i<<" res:"<<min(prefix[i],suffix[i+1])-arr[i]<<endl;
         }
