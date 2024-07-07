@@ -1,58 +1,37 @@
+// TC=O(n)
+// SC=O(n)
 class Solution {
 public:
     bool isValid(string s) {
-        int len=s.size();
-        if(len==1) return false;
-        
         stack<char>st;
         
-        st.push(s[0]);
-        
-        int ind=1;
-        while(!st.empty() || ind<len)
+        for(auto c: s)
         {
-            
-            if(ind==len) return false;
-            char c=s[ind];
-            if(c==')')
+            if(c=='(' || c=='{' || c=='[') st.push(c);
+            else
             {
-                if(st.empty()) return false;
-                if(st.top()=='(') 
+                if(c==')')
                 {
-                   
-                    st.pop();
-                }
-                else  st.push(s[ind]);
-            }
-            else if(c==']')
-            {
-                if(st.empty()) return false;
-                if(st.top()=='[') 
+                    if(st.empty()) return false;
+                    if(st.top()=='(') st.pop();
+                    else return false;
+                } 
+                else  if(c=='}')
                 {
-                    
-                    st.pop();
-                }
-                else  st.push(s[ind]);
-            }
-            else if(c=='}')
-            {
-                if(st.empty()) return false;
-                if(st.top()=='{') 
+                    if(st.empty()) return false;
+                    if(st.top()=='{') st.pop();
+                    else return false;
+                } 
+                 else  if(c==']')
                 {
-                    st.pop();
-                }
-                else  st.push(s[ind]);
+                    if(st.empty()) return false;
+                    if(st.top()=='[') st.pop();
+                    else return false;
+                } 
             }
-            
-            else  st.push(s[ind]);
-            
-            // cout<<"ind:"<<ind<<" st.size():"<<st.size()<<endl;
-            ind++;
-            
         }
         
         if(st.size()==0) return true;
         else return false;
-            
     }
 };
