@@ -1,21 +1,22 @@
-// TC=O(n*q)
+// TC=O(n+n)
 // SC=O(n)
 class StockSpanner {
 public:
-    vector<int>v;
+   stack<pair<int,int>>st;
     StockSpanner() {
         
     }
     
     int next(int price) {
-        v.push_back(price);
-        int cnt=0;
+        int cnt=1;
         
-        for(int i=v.size()-1;i>=0;i--)
+        while(!st.empty() && st.top().first<=price)
         {
-            if(v[i]<=price) cnt++;
-            else break;
+            cnt+=st.top().second;
+            st.pop();
         }
+        
+        st.push({price,cnt});
         return cnt;
     }
 };
