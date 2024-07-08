@@ -1,3 +1,5 @@
+// TC=O(n)
+// SC=O(n)
 class LRUCache {
 public:
      list<int>dll;
