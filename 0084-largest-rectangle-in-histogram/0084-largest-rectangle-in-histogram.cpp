@@ -45,36 +45,11 @@ public:
         nextSmallerRight(nsr,arr);
         for(int i=0;i<arr.size();i++)
         {
-            int el=arr[i];
-         
-            
-//             for(int pre=i-1;pre>=0;pre--)
-//             {
-               
-//                 if(arr[pre]<el){
-//                     smallerleft=pre;
-//                     break;
-//                 }
-                
-//                 // if(pre==0) smallerleft=-1;
-//             }
-            
-//             for(int next=i+1;next<n;next++)
-//             {
-               
-//                 if(arr[next]<el){
-//                     smallerright=next;
-//                     break;
-//                 }
-                
-//                 // if(next==n-1) smallerright=n;
-//             }
-            
-//             
+            int el=arr[i];         
             
             int smallerleft=nsl[i];
             int smallerright=nsr[i];
-            // cout<<"i:"<<i<<" smallerleft:"<<smallerleft<<","<<" smallerright:"<<smallerright<<" width:"<<(smallerright-smallerleft-1)<<endl;
+           
             int area=(smallerright-smallerleft-1)*arr[i];
             maxarea=max(maxarea,area);
         }
