@@ -1,28 +1,28 @@
-// Approach2: Better Approach
-// TC=O(n*log(n))
+// TC=O(n)
 // SC=O(n)
 class Solution {
 public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
         
         int n=nums.size();
+        // in dequeue we will push the index
+        deque<int>dq; // ⭐dequeue template has name deque and not dequeue
         vector<int>res;
-        // element,ind
-        priority_queue<pair<int,int>>pq;
-        
-     
         
         for(int i=0;i<n;i++)
         {
-            // we cannot tolerated the topmost element index out of the window {valid window size[(i-k-1).....i]}
-            pq.push({nums[i],i});
-            if(i>=(k-1)){
-            while(!pq.empty() && pq.top().second<=(i-k)) pq.pop(); // ⭐here i missed the equal to sign in pq.top.second<=.
+          
             
-            res.push_back(pq.top().first);
+            while(!dq.empty() && dq.front()<=(i-k)) dq.pop_front();
+            
+            // dq will maintain the elements in the decreasing order. monotonic decreasing order
+            while(!dq.empty() && nums[dq.back()]<nums[i]) dq.pop_back(); //⭐Here nums[dq.back()] will come and not front
+            dq.push_back(i);
+            
+            if(i>=k-1)
+            {
+              res.push_back(nums[dq.front()]);  
             }
-            
-           
         }
         
         return res;
