@@ -1,3 +1,5 @@
+// TC=O(n)+O(k)
+// SC=O(n)
 class Solution {
 public:
     string removeKdigits(string num, int k) {
