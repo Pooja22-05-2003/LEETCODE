@@ -9,7 +9,7 @@ public:
         {
             int el=arr[i];
             
-            while(!st.empty() && arr[st.top()]>el) st.pop(); // equal to sign will come in subarray , so no need to add equal to.
+            while(!st.empty() && arr[st.top()]>=el) st.pop(); // equal to sign will come in subarray , so no need to add equal to.
             
             if(st.empty()) nsl[i]=-1;
             else nsl[i]=st.top();
@@ -25,7 +25,7 @@ public:
         {
             int el=arr[i];
             
-            while(!st.empty() && arr[st.top()]>=el) st.pop();// In this que, here equal will not be added, because we are moving in right in actual ans calcaultion , so if that element will come in right that will count in itself.
+            while(!st.empty() && arr[st.top()]>el) st.pop();// In this que, here equal will not be added, because we are moving in right in actual ans calcaultion , so if that element will come in right that will count in itself.
             
             if(st.empty()) nsr[i]=arr.size();
             else nsr[i]=st.top();
@@ -40,7 +40,7 @@ public:
         {
             int el=arr[i];
             
-            while(!st.empty() && arr[st.top()]<el) st.pop(); // equal to sign will come in subarray , so no need to add equal to.
+            while(!st.empty() && arr[st.top()]<=el) st.pop(); // equal to sign will come in subarray , so no need to add equal to.
             
             if(st.empty()) nsl[i]=-1;
             else nsl[i]=st.top();
@@ -56,7 +56,7 @@ public:
         {
             int el=arr[i];
             
-            while(!st.empty() && arr[st.top()]<=el) st.pop();// In this que, here equal will not be added, because we are moving in right in actual ans calcaultion , so if that element will come in right that will count in itself.
+            while(!st.empty() && arr[st.top()]<el) st.pop();// In this que, here equal will not be added, because we are moving in right in actual ans calcaultion , so if that element will come in right that will count in itself.
             
             if(st.empty()) nsr[i]=arr.size();
             else nsr[i]=st.top();
