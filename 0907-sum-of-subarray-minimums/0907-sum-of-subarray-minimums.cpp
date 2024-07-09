@@ -1,70 +1,59 @@
-// TC=O(3*n)==O(n)
-// SC=O(2*n)==O(n)
 class Solution {
 public:
-    void NSL(vector<int>& arr,vector<int>&NextSmallerLeft)
+const int mod=1e9+7;
+   void nextSmallerLeft( vector<int>&nsl, vector<int>arr)
     {
-        NextSmallerLeft[0]=-1;
         stack<int>st;
-        st.push(0);
         
-        for(int i=1;i<arr.size();i++)
+        for(int i=0;i<arr.size();i++)
         {
-            while(!st.empty() && arr[st.top()]>arr[i]) st.pop();
-            if(st.empty()) NextSmallerLeft[i]=-1;
-            else NextSmallerLeft[i]=st.top();
+            int el=arr[i];
             
-            st.push(i);
-        }
-        
-        
-    }
-    
-    
-    
-    
-    void NSR(vector<int>& arr,vector<int>&NextSmallerRight)
-    {
-        int n=arr.size();
-        NextSmallerRight[n-1]=n;
-        stack<int>st;
-        st.push(n-1);
-        
-        for(int i=n-2;i>=0;i--)
-        {
-            while(!st.empty() && arr[st.top()]>=arr[i]) st.pop();
-            if(st.empty()) NextSmallerRight[i]=n;
-            else NextSmallerRight[i]=st.top();
+            while(!st.empty() && arr[st.top()]>=el) st.pop(); // equal to sign will come in subarray , so no need to add equal to.
             
+            if(st.empty()) nsl[i]=-1;
+            else nsl[i]=st.top();
             st.push(i);
         }
     }
     
-    
+    void nextSmallerRight(vector<int>&nsr, vector<int>arr)
+    {
+        stack<int>st;
+        
+        for(int i=arr.size()-1;i>=0;i--)
+        {
+            int el=arr[i];
+            
+            while(!st.empty() && arr[st.top()]>el) st.pop();// In this que, here equal will not be added, because we are moving in right in actual ans calcaultion , so if that element will come in right that will count in itself.
+            
+            if(st.empty()) nsr[i]=arr.size();
+            else nsr[i]=st.top();
+            st.push(i);
+        }
+    }
     int sumSubarrayMins(vector<int>& arr) {
         int n=arr.size();
-        int Mod=1e9+7;
+        vector<int>nsl(n);
+        vector<int>nsr(n);
+        nextSmallerLeft(nsl,arr);
+        nextSmallerRight(nsr,arr);
+        //int n=arr.size();
+      
+         for(int i=0;i<n;i++) cout<<nsl[i]<<" ";
+        cout<<endl;
         
-        vector<int>NextSmallerLeft(n,n);
-        vector<int>NextsmallerRight(n,n);
+        for(int i=0;i<n;i++) cout<<nsr[i]<<" ";
+        cout<<endl;
         
-        NSL(arr,NextSmallerLeft);
-        NSR(arr,NextsmallerRight);
-        
-        long long  sum=0;
-        for(int i=0;i<n;i++)
-        {
-            long long  Num_Left= Num_Left=i-NextSmallerLeft[i];
+        long ans=0;
+        for(int i=0;i<n;i++){
+            int l=i-nsl[i];
+            int r=nsr[i]-i;
             
-            long long Num_Right=NextsmallerRight[i]-i;
-            
-            long long total=Num_Left*Num_Right;
-            sum=sum%Mod;
-            sum+=(total*arr[i])%Mod;
-            sum=sum%Mod;
+            ans=(ans+(((long)l*r*arr[i])%mod))%mod;
+            //ans=(ans+(l2*arr[i])%mod)%mod;
         }
-        
-        return sum;
-        
+        return (int)ans;
     }
 };
