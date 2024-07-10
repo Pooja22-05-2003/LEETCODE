@@ -1,9 +1,9 @@
-// TC=O(n*(sqrt(n)))
-// Sc=O(1)
+// TC=O(n*(log(log(n))))
+// Sc=O(n)
 class Solution {
 public:
   
-    void SieveOfEratosthenes(int n, vector<bool>&prime)
+    void SieveOfEratosthenes(int n, vector<bool>&prime) // O(log(log(n)))
     {
     // Create a boolean array "prime[0..n]" and initialize
     // all entries it as true. A value in prime[i] will
