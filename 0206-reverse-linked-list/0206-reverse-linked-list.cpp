@@ -8,21 +8,19 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+// Using Recursion
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
         
-        ListNode*prev=NULL;
-        ListNode*curr=head;
+       if(head==NULL || head->next==NULL) return head;
+       ListNode*lastnode=head->next;
+       ListNode* newhead=reverseList(head->next);
         
-        while(curr!=NULL)
-        {
-            ListNode*temp=curr->next;
-            curr->next=prev;
-            prev=curr;
-            curr=temp;
-        }
+        lastnode->next=head;
+        head->next=NULL;// This step in necessary
         
-        return prev;
+        return newhead;
+        
     }
 };
