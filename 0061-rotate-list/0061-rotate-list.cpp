@@ -23,11 +23,11 @@ public:
         }
         
         // cout<<"cnt:"<<cnt<<endl;
-        if(cnt<k) return rotateRight(head,k-cnt);
+        if(cnt<k) return rotateRight(head,k-cnt); // ⭐Edge case
         
         else
         {
-            if(fast!=NULL){
+            if(fast!=NULL){  // ⭐Edge case
             while(fast->next!=NULL)
             {
                 slow=slow->next;
