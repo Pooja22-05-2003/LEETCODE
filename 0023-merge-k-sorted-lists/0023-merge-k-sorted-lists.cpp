@@ -20,13 +20,13 @@ public:
         ListNode*prev=dummy;
         for(int i=0;i<lists.size();i++) 
         {
-            // cout<<"i:"<<i<<" val:"<<lists[i]->val<<endl;
-            if(lists[i]!=NULL) pq.push({lists[i]->val,lists[i]});
+            
+            if(lists[i]!=NULL) pq.push({lists[i]->val,lists[i]});//⭐Edge case 1:- before pushing in the PQ, I am not checking whther the list pointer is pointing to null
         }
         
         while(!pq.empty())
         {
-            // cout<<"pq size:"<<pq.size()<<endl;
+          
             auto curr=pq.top();
             pq.pop();
             
