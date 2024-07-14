@@ -36,8 +36,9 @@ public:
             
             if(temp->next!=NULL) pq.push({temp->next->val,temp->next});
            
-            ListNode* newnode=new ListNode(nodeval);
-            prev->next=newnode;
+            // ListNode* newnode=new ListNode(nodeval);
+            prev->next=temp;
+            temp->next=NULL;
             prev=prev->next;
             
         }
