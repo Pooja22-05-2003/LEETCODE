@@ -4,9 +4,7 @@ public:
     int curr=0;
     priority_queue<vector<int>>timeline;
     Twitter() {
-        friends.clear();
-        curr = 0;
-        timeline = priority_queue<vector<int>>();
+        
     }
     
     void postTweet(int userId, int tweetId) {
