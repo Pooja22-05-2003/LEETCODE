@@ -1,37 +1,54 @@
 class Twitter {
 public:
-    map<int, unordered_set<int>> friends;
-    int curr=0;
-    priority_queue<vector<int>>timeline;
+    
+    // Creating 1 data structure which keep track of userID and all its follower, as all the followers have their unique ID, so we can use unordered_set
+    
+    // {mp[userID]-> {All the ID of the people which the current user folllwed}}
+    map<int,unordered_set<int>>mp;
+    
+    
+    // Priority queue, will keep track of all the tweets in the sorted order of their timing.
+    // {time,TwitID, userID}
+    priority_queue<vector<int>>pq;
+    int time;
     Twitter() {
-        
+        time=0;
     }
     
     void postTweet(int userId, int tweetId) {
-        timeline.push({curr++, tweetId, userId});
+         time++;
+        pq.push({time,tweetId, userId});
     }
     
     vector<int> getNewsFeed(int userId) {
-        vector<int>ans;
-        priority_queue<vector<int>> userTimeline=timeline;
-        int n = 0;
-        while(!userTimeline.empty() && n < 10) {
-            auto topTweet = userTimeline.top();
-            userTimeline.pop(); 
-            if(topTweet[2] == userId || friends[userId].count(topTweet[2])){
-                ans.push_back(topTweet[1]);
-                n++;
-            }
-        }
-        return ans;
+       
+        // first copy the PQ, so that the original will not get affected
+         priority_queue<vector<int>>pq1=pq;
+         vector<int>res;
+         int cnt=0;
+        
+         while(!pq1.empty() && cnt<10)
+         {
+             auto curr=pq1.top();
+             int currUserID=curr[2];
+              pq1.pop();
+             if(userId==currUserID || mp[userId].count(currUserID)!=0)
+             {
+                 res.push_back(curr[1]);
+                
+                 cnt++;
+             }
+         }
+        return res;
+        
     }
     
     void follow(int followerId, int followeeId) {
-        friends[followerId].insert(followeeId);
+        mp[followerId].insert(followeeId);
     }
     
     void unfollow(int followerId, int followeeId) {
-        friends[followerId].erase(followeeId);
+         mp[followerId].erase(followeeId);
     }
 };
 
