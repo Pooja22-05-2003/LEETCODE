@@ -10,7 +10,7 @@ public:
         int m=grid.size();
         int n=grid[0].size();
         vector<vector<int>>dis(m,vector<int>(n,INT_MAX));
-        priority_queue<pair<int,pair<int,int>>, vector<pair<int,pair<int,int>>>, greater<pair<int,pair<int,int>>>>pq;
+        queue<pair<int,pair<int,int>>>pq;
         if(grid[0][0]==0) pq.push({1,{0,0}});
         else return -1;
 
@@ -18,7 +18,7 @@ public:
 
         while(!pq.empty())
         {
-            auto curr=pq.top(); pq.pop();
+            auto curr=pq.front(); pq.pop();
 
             int cost=curr.first;
             int i=curr.second.first;
