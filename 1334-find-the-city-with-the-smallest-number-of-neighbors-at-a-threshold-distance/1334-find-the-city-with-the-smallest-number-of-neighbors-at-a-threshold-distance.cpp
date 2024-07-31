@@ -1,71 +1,50 @@
 class Solution {
 public:
-    vector<pair<int,int>> adj[105];
-    vector<pair<int,int>> ans;
-
-    bool static cmp(const pair<int,int> p1 ,const pair<int,int> p2)
-    {
-        if(p1.first != p2.first)
-            return p1.first < p2.first;
-
-        return p1.second > p2.second;
-    }
-
-    void dijkstra(int src, int n, int distanceThreshold)
-    {
-        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>> > pq;
-        vector<int> distance(n + 1, INT_MAX);
-
-        distance[src] = 0;
-        pq.push({0,src});
-
-        while(! pq.empty())
+    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
+   
+   
+            
+        vector<vector<int>>grid(n,vector<int>(n,1e8));
+        
+        for(int i=0;i<n;i++) grid[i][i]=0;
+        for(auto it: edges)
         {
-            int prev = pq.top().second;
-            int prevDist = pq.top().first;
-            pq.pop();
-
-            for(auto it : adj[prev])
+            int u=it[0];
+            int v=it[1];
+            int w=it[2];
+            
+            grid[u][v]=w;
+            grid[v][u]=w;
+                
+        }
+        
+        for(int via=0;via<n;via++)
+        {
+            for(int i=0;i<n;i++)
             {
-                int next = it.first;
-                int nextDist = it.second;
-                if(distance[next] > distance[prev] + nextDist)
+                for(int j=0;j<n;j++)
                 {
-                    distance[next] = distance[prev] + nextDist;
-                    pq.push({distance[next], next});
+                    grid[i][j]=min(grid[i][j], (grid[i][via]+grid[via][j]));
                 }
             }
         }
+        
+         int cityWithFewestReachable = -1;
+        int fewestReachableCount = INT_MAX;
 
-        int cnt = 0;
-        for(int i=0;i<n;i++)
-        {
-            if(i != src && distance[i] <= distanceThreshold)
-                cnt++;
+        for (int i = 0; i < n; i++) {
+            int reachableCount = 0;
+            for (int j = 0; j < n; j++) {
+                if (i != j && grid[i][j] <= distanceThreshold) {
+                    reachableCount++;
+                }
+            }
+
+            if (reachableCount <= fewestReachableCount) {
+                fewestReachableCount = reachableCount;
+                cityWithFewestReachable = i;
+            }
         }
-
-        ans.push_back({cnt,src});
-
-    }
-
-
-    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-
-        for(int i=0;i<edges.size();i++)
-        {
-            int u = edges[i][0], v = edges[i][1], w = edges[i][2];   
-            adj[u].push_back({v,w});
-            adj[v].push_back({u,w});
-        }
-
-        for(int i=0;i<n;i++)
-        {
-            dijkstra(i, n, distanceThreshold);
-        }
-
-        sort(ans.begin(),ans.end(),cmp);
-
-        return ans[0].second;
-
+        return cityWithFewestReachable;
     }
 };
