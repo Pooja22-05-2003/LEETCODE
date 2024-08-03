@@ -1,26 +1,42 @@
 class Solution {
 public:
-    
+    bool checkValidString(string s) {
+        int open = 0;
+        int close = 0;
+        int n = s.length();
+        
+        //Left to Right - Check Open Brackets
+        for (int i = 0; i < n; i++) {
 
-bool checkValidString(string s) {
-        int n = s.size();
-        int min = 0, max = 0;
-        for (int i = 0 ; i < n ; i++){
-            if (s[i] == '('){
-                min++;
-                max++;
+            if (s[i] == '(' || s[i] == '*') {
+                open++;
+            } else {
+                open--;
             }
-            else if (s[i] == ')'){
-                min--;
-                max--;
+                
+            if (open < 0) {
+               
+                return false;
             }
-            else {
-                min--;
-                max++;
-            }
-            if (min < 0) min = 0;
-            if (max < 0) return false;
         }
-        return min == 0;
+
+        //Right to Left - Check CLose Brackets
+        for (int i = n - 1; i >= 0; i--) {
+            
+            if (s[i] == ')' || s[i] == '*') {
+                close++;
+            } else {
+                close--;
+            }
+            
+            
+            if (close < 0) {
+          
+                return false;
+            }
+             
+        }
+        
+        return true;
     }
 };
