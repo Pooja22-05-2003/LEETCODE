@@ -13,7 +13,7 @@ public:
         {
             
              vector<int>arr;
-            for(int j=0;j<30;j++)
+            for(int j=0;j<n;j++)
             {
                 if((i>>j)&1)
                 {
