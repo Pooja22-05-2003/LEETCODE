@@ -1,37 +1,36 @@
-// TC=O(n)
-// SC=O(n)
 class Solution {
 public:
-    bool isValid(string s) {
+    bool isValid(string str) {
         stack<char>st;
-        
-        for(auto c: s)
+        for(auto it:str)
         {
-            if(c=='(' || c=='{' || c=='[') st.push(c);
+            if(it=='(' || it=='[' || it=='{') st.push(it);
             else
             {
-                if(c==')')
+                
+                if(it==')')
                 {
-                    if(st.empty()) return false;
-                    if(st.top()=='(') st.pop();
-                    else return false;
-                } 
-                else  if(c=='}')
+                   if(  !st.empty() && st.top()=='(')  st.pop();
+                   else return false;
+                }
+                
+                else if(it==']' )
                 {
-                    if(st.empty()) return false;
-                    if(st.top()=='{') st.pop();
-                    else return false;
-                } 
-                 else  if(c==']')
+                   if(  !st.empty() && st.top()=='[')  st.pop();
+                   else return false;
+                }
+                
+                else if(it=='}' )
                 {
-                    if(st.empty()) return false;
-                    if(st.top()=='[') st.pop();
-                    else return false;
-                } 
+                   if(  !st.empty() && st.top()=='{') st.pop();
+                   else return false;
+                }
+                
+                
             }
+            
         }
         
-        if(st.size()==0) return true;
-        else return false;
+        return st.empty();
     }
 };
