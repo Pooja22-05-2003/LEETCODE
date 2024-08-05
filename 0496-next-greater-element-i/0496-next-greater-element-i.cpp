@@ -17,7 +17,7 @@ public:
             }
             else
             {
-              while(!st.empty() && st.top()<arr2[i]) st.pop();
+              while(!st.empty() && st.top()<=arr2[i]) st.pop();
               
               if(!st.empty()) mp[arr2[i]]=st.top();
               else mp[arr2[i]]=-1;
