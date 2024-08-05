@@ -11,7 +11,7 @@ public:
         int rightmax=INT_MIN;
         
         int res=0;
-        while(left<right)
+        while(left<=right)
         {
             if(arr[left]>=arr[right])
             {
