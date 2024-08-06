@@ -17,7 +17,7 @@ public:
             // window is from i to j
             
             
-                while(((j-i+1)-maxlen)>k && j<n)
+                while(((j-i+1)-maxlen)>k)
                 {
                     // cout<<"jj:"<<j<<" ii:"<<i<<endl;
                     mp[s[i]]--;
