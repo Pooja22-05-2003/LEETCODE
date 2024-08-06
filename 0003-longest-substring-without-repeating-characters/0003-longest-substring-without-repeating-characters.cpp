@@ -1,40 +1,41 @@
-// TC=O(N)
-// SC=O(1)
-
-/*
-Amazon-49, Microsoft-29,Facebook-23,Bloomberg-23,Apple-16
-Google-13,Spotify-10,Adobe-6,Uber-5,VMware-5,Yahoo-4,Goldman Sachs-4,Oracle-4,Walmart Global Tech-3,Salesforce-3,Paypal-2,Samsung-2,Intuit-2,Yandex-2,Zoho-2,JPMorgan-2
-*/
-
 class Solution {
 public:
+    bool valids(string s, unordered_map<char,int>mp, int i, int j)
+    {
+        bool ans=true;
+        for(auto it:mp)
+        {
+            if(it.second>1) return false;
+        }
+        return ans;
+    }
     int lengthOfLongestSubstring(string s) {
-        int n=s.size();
-        if(n==0) return 0; // edge case
-        // if(s==" " ) return 1;
-        int maxlen=1;
-        vector<int>mp(255,-1); // We are using array and not map, because map will initlize all the char value to 0, and then it will give wrong ans for test case s="au"
+        if(s=="") return 0;
+        int maxlen=0;
+        unordered_map<char,int>freq;
         int i=0;
         int j=0;
-        // int len=0;
-        while(j<n)
-        { 
-            if(mp[s[j]]>=i)
+      
+        while(j<s.size())
+        {
+            // cout<<"i:"<<i<<"j:"<<j<<endl;
+            freq[s[j]]++;
+            while(i<j && !valids(s,freq,i,j))
             {
-                i=mp[s[j]]+1;
-               
-                mp[s[j]]=j;
-                 j++;
-                continue;
-               
+                
+                freq[s[i]]--;
+                i++;
             }
             
-            maxlen=max(maxlen,(j-i+1));
-            mp[s[j]]=j;
            
+            int len=j-i+1;
+            // cout<<"len:"<<len<<endl;
+           
+            maxlen=max(maxlen,len);
             j++;
+    
         }
-        
         return maxlen;
-    }
+     }
+    
 };
