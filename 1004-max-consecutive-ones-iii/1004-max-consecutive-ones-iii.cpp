@@ -5,30 +5,26 @@
 // Eliminating the k loop.
 class Solution {
 public:
-    int longestOnes(vector<int>& nums, int k) {
-        int n=nums.size();
-        int len=0;
-       
-     
-        int i=0;
+    int longestOnes(vector<int>& s, int k) {
+        int n=s.size();
+        int maxlen=0;
         int j=0;
-        int cnt0=0;
+        int i=0;
         
         while(j<n)
         {
-            if(nums[j]==0) cnt0++;
+            if(s[j]==0) k--;
             
-            while(i<j && cnt0>k )
+            while(i<j && k<0)
             {
-                if(nums[i]==0) cnt0--;
+                if(s[i]==0) k++;
                 i++;
             }
-            if(cnt0<=k){
-            len=max(len,j-i+1);
-            }
+            
+            if(k>=0)  maxlen=max(maxlen,(j-i+1));
             j++;
         }
         
-        return len;
+        return maxlen;
     }
 };
