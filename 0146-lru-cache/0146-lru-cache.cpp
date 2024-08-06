@@ -1,12 +1,12 @@
-// TC=O(n)
-// SC=O(n)
+// dll mei erase back se karenge, and most recently ko front mei rakhenge
 class LRUCache {
 public:
-     list<int>dll;
-    unordered_map<int,pair<list<int>::iterator,int>>mp; // this map will store the key->address and the value
     int n;
-    LRUCache(int capacity) {
-        n=capacity;
+    list<int>dll;
+    // mp=> {key->{address,value}}
+    unordered_map<int,pair<list<int>::iterator,int>>mp;
+    LRUCache(int cap) {
+        n=cap;
     }
     
     void makeRecentlyUsed(int key)
@@ -15,25 +15,22 @@ public:
         dll.push_front(key);
         mp[key].first=dll.begin();
     }
-    
     int get(int key) {
-    
         if(mp.find(key)!=mp.end())
         {
             makeRecentlyUsed(key);
-            return mp[key].second;
+            int ans=mp[key].second;
+            return ans;
         }
         
         return -1;
-        
     }
     
     void put(int key, int value) {
-        
         if(mp.find(key)!=mp.end())
         {
+           makeRecentlyUsed(key);
             mp[key].second=value;
-            makeRecentlyUsed(key);
         }
         else
         {
