@@ -1,49 +1,35 @@
-// Brute  Force approach
-// TC=O(nlogn)
-// SC=O(1)
-
 class Solution {
 public:
-    bool check(vector<int>& piles, int k, int h)
+    bool check(int k,vector<int>& arr, int h)
     {
-        // total time required , if koko is eating at the speed of k banana's per hr.
         int t=0;
-        
-        for(int i=0;i<piles.size();i++)
+        for(auto it: arr)
         {
-            if(piles[i]%k==0) t+=(piles[i]/k);
-            else t+=((piles[i]/k)+1);
-            if(t>h) break; // ** 1st edge case:- without this it was going in the runtime error.
+            t+=(it/k)+((it%k)!=0);
+            if(t>h) break;
+        } 
+      
+        return (t<=h);
+            
+    }
+    int minEatingSpeed(vector<int>& arr, int h) {
+        
+        int n=arr.size();
+        int maxx=INT_MIN;
+        for(auto it: arr)  maxx=max(maxx,it);
+        int st=1;
+        int end=maxx;
+        
+        while(st<=end)
+        {
+            int mid=(st+end)/2;
+            if(mid==1 && check(mid,arr,h)==true) return mid;
+            if(check(mid,arr,h)==true && check(mid-1,arr,h)==false) return mid;
+            if(check(mid,arr,h)==true) end=mid-1;
+            else st=mid+1;
          
         }
         
-      
-       return (t<=h)?true:false;
-        
-    }
-    int minEatingSpeed(vector<int>& piles, int h) {
-        
-        int max_k=*max_element(piles.begin(),piles.end());
-        
-        // for(int k=1;k<=max_k;k++) // ** 2nd edge case:- Don't start this with k=0, this will never lead to ans and will even give the zero divisible error.
-        // {
-        //     if(check(piles,k,h)==true) return k;
-        // }
-        
-         int st=1;
-         int end=max_k;
-        
-         while(st<=end)
-         {
-             int mid=(st+end)/2;
-             
-             if(mid-1==0 && check(piles,mid,h)==true  ) return mid; //**  Edge case:- Must need to add this case for the 1 size arr else it will give the runtime error.
-             if((mid-1>=0) &&  check(piles,mid,h)==true && check(piles,mid-1,h)==false) return mid;
-             
-             else if (check(piles,mid,h)==false) st=mid+1;
-             else end=mid-1;
-             
-         }
-        return max_k;
+        return -1;
     }
 };
