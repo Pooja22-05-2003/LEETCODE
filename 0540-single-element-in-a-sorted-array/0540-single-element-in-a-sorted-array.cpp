@@ -8,7 +8,7 @@ public:
         
         if(n==1) return arr[0];
         if(st+1<n && arr[0]!=arr[1]) return arr[0];
-        else if(end-1>=0 && arr[n-1]-arr[n-2]) return arr[n-1];
+        else if(end-1>=0 && arr[n-1]!=arr[n-2]) return arr[n-1];
         
         while(st<=end)
         {
