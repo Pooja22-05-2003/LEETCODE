@@ -1,47 +1,46 @@
 class Solution {
 public:
-    int minimumEffortPath(vector<vector<int>>& arr) {
-        int m=arr.size();
-        int n=arr[0].size();
-        vector<vector<int>>dis(m, vector<int>(n,INT_MAX));
-         priority_queue<pair<int,pair<int,int>>, vector<pair<int,pair<int,int>>>, greater<pair<int,pair<int,int>>>>pq;
+    int minimumEffortPath(vector<vector<int>>& mat) {
+        int n=mat.size();
+        int m=mat[0].size();
+        vector<vector<int>>dis(n,vector<int>(m,INT_MAX));
         
-        pq.push({0,{0,0}});
-        dis[0][0]=0;
+        priority_queue<vector<int> ,vector<vector<int>> , greater<vector<int>>> pq;
+        
+        // 0 is the dist require to reach at the source 
+        pq.push({0,0,0});
         
         while(!pq.empty())
         {
             auto curr=pq.top(); pq.pop();
-            int cost=curr.first;
-            int i=curr.second.first;
-            int j=curr.second.second;
+            int d=curr[0];
+            int r=curr[1];
+            int c=curr[2];
+            int val=mat[r][c];
             
-            if(i==m-1 && j==n-1) return cost;
-              int adjr[4]={-1,0,1,0};
-              int adjc[4]={0,1,0,-1};
+            int adjr[4]={-1,+1,0,0};
+            int adjc[4]={0,0,-1,1};
             
-             for(int k=0;k<4;k++)
+            for(int i=0;i<4;i++)
             {
-                int ar=i+adjr[k];
-                int ac=j+adjc[k];
-                if(ar<0 || ar>=m || ac<0 || ac>=n ) continue;
-                else
+                int newr=r+adjr[i];
+                int newc=c+adjc[i];
+                
+                if(newr>=0 && newr<n && newc>=0 && newc<m)
                 {
+                    int newval=mat[newr][newc];
+                    int diff=abs(val-newval);
+                    int maxx=max(diff,d);
                     
-                    int effort=abs(arr[i][j]-arr[ar][ac]);
-                    int max_diff=max(cost,effort);
-                    
-                    if(dis[ar][ac]> max_diff)
+                    if(dis[newr][newc]> maxx)
                     {
-                        pq.push({max_diff,{ar,ac}});
-                        dis[ar][ac]=max_diff;
+                        dis[newr][newc]=maxx;
+                        pq.push({maxx,newr,newc});
                     }
                 }
-             }
-            
+            }
         }
         
         return (dis[n-1][m-1]==INT_MAX)?0:dis[n-1][m-1];
-        
     }
 };
