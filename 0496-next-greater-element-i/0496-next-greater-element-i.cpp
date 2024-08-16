@@ -1,41 +1,37 @@
-// TC=O(size1+size2)
-// SC=O(size2)
 class Solution {
 public:
-    vector<int> nextGreaterElement(vector<int>& arr1, vector<int>& arr2) {
-        unordered_map<int,int>mp;
-        vector<int>ans(arr1.size(),-1);
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
         stack<int>st;
-        
-        // O(n+n) // O(2*size2)
-        for(int i=arr2.size()-1;i>=0;i--)
+        unordered_map<int,int>mp;
+        for(int i=nums2.size()-1;i>=0;i--)
         {
-            if(i==arr2.size()-1) 
+            if(i==nums2.size()-1) 
             {
-                st.push(arr2[i]);
-                mp[arr2[i]]=-1;
+                st.push(nums2[i]);
+                mp[nums2[i]]=-1;
             }
             else
             {
-              while(!st.empty() && st.top()<=arr2[i]) st.pop();
-              
-              if(!st.empty()) mp[arr2[i]]=st.top();
-              else mp[arr2[i]]=-1;
+                // pop all the smallest element than the current element
+                while(!st.empty() && st.top()<=nums2[i]) st.pop();
                 
-              st.push(arr2[i]);
+                // store the ans corresponding to the current element
+                if(!st.empty()) mp[nums2[i]]=st.top();
+                else mp[nums2[i]]=-1;
+                
+                st.push(nums2[i]);
+                
             }
-        }
-        
-        
-        // O(size1)
-        for(int i=0;i<arr1.size();i++)
-        {
-            int a=mp[arr1[i]];
-            if(a==-1){}
-            else ans[i]=a;
+            
             
         }
         
-        return ans;
+        vector<int>res(nums1.size());
+        for(int i=0;i<nums1.size();i++)
+        {
+            res[i]=mp[nums1[i]];
+        }
+        
+        return res;
     }
 };
