@@ -13,34 +13,29 @@ class Solution {
 public:
     int findmin(TreeNode* root)
     {
-       if(root->left==NULL) return root->val;
-       else return findmin(root->left);
+        if(root->left==NULL) return root->val;
+        else return findmin(root->left);
     }
     TreeNode* deleteNode(TreeNode* root, int key) {
         if(root==NULL) return NULL;
+        
         if(root->val==key)
         {
-            // if both child are present//
-            // Find the min of the right subtree and make the node val = root->right(min val) and delete the min value node from the right subtree//
-            if(root->left!=NULL && root->right!=NULL)
+            if(root->left && root->right)
             {
-                int minn= findmin(root->right);
-                root->val=minn;
-                root->right=deleteNode(root->right,minn);
+                int x=findmin(root->right);
+                root->val=x;
+                root->right=deleteNode(root->right,x);
                 return root;
-            
             }
-            if(root->left!=NULL) return root->left; // only left child is present//
-            if(root->right!=NULL) return root->right;// only right child is present//
-            
-           
-            else return NULL;
+             if(root->left) return root->left;
+             if(root->right) return root->right;
+             else return NULL;
         }
-        if(key>root->val) root->right= deleteNode(root->right,key);
-        else if(key<root->val) root->left= deleteNode(root->left,key);
-       
+         if(root->val>key) root->left=deleteNode(root->left,key);
+        else if(root->val<key)root->right=deleteNode(root->right,key);
         
         return root;
-            
+        
     }
 };
