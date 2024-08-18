@@ -10,40 +10,50 @@
  * };
  */
 
-// Inorder Traversal= left root right
-// TC=O(N)
-// SC=O(N)
+// MORRIS TRAVERAL
+// TC=O(N), SC=O(1)
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
+        vector<int>res;
+        if(root==NULL) return res;
+        TreeNode*curr=root;
         
-        stack<TreeNode*>st;
-        vector<int>ans;
-        
-        if(root==NULL) return ans;
-        TreeNode* curr=root;
-        
-       
-        
-        while(true)   // ⭐⭐Here while(!st.empty condition is false because initially , I have not pushed any val)
-        {  
-           if(curr==NULL)
-           {
-               // check whether the stack is empty or not
-               if(st.empty()) break;
-               curr=st.top();
-               st.pop();
-               cout<<"curr->val:"<<curr->val<<endl;
-               ans.push_back(curr->val);
-               curr=curr->right;
-           }
+        while(curr)
+        {
+            if(curr->left==NULL)
+            {
+                res.push_back(curr->val);
+                curr=curr->right;
+            }
             else
             {
-                st.push(curr);
-                curr=curr->left;
+                TreeNode*prev=curr->left;
+                
+                while(prev->right && (prev->right!=curr))
+                {
+                    // traversing the left subtree to make the connection of leftnode right most connection to root
+                    prev=prev->right;
+                }
+                
+                if(prev->right==NULL)
+                {
+                    // it means connection is not created yet
+                    prev->right=curr;
+                    curr=curr->left;
+                }
+                else
+                {
+                   // means destory the connection and now explore the right subtree
+                   prev->right=NULL;
+                    
+                   // before moving curr to right subtree, store the current value in the res
+                   res.push_back(curr->val);
+                   curr=curr->right; 
+                }
             }
         }
         
-        return ans;
+        return res;
     }
 };
