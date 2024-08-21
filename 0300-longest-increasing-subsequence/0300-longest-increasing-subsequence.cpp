@@ -1,23 +1,48 @@
 class Solution {
 public:
-    int solve(int ind, int prev_ind, vector<int>&nums,vector<vector<int>>&dp)
-    {
-        if(ind==nums.size()) return 0;
-        
-        if(dp[ind][prev_ind+1]!=-1) return dp[ind][prev_ind+1];
-        int nottake=0+solve(ind+1,prev_ind,nums,dp);
-        int take=0;
-        if(prev_ind==-1 || nums[ind]>nums[prev_ind])
-        {
-            take=1+solve(ind+1,ind,nums,dp);
-        }
-        
-        return dp[ind][prev_ind+1]=max(nottake, take);
-    }
     int lengthOfLIS(vector<int>& nums) {
         int n=nums.size();
-        vector<vector<int>>dp(n,vector<int>(n+1,-1));
-        int prev_ind=-1;
-        return solve(0,prev_ind,nums,dp);
+        vector<int>dp(n,1);
+        vector<int>hash(n,0);
+        
+        int lastInd=0;
+        int res=1;
+        for(int i=1;i<n;i++)
+        {
+            hash[i]=i;
+            for(int j=i-1;j>=0;j--)
+            {
+            
+                if(nums[j]<nums[i] && dp[i]<(1+dp[j]))
+                {
+                    // cout<<"i:"<<i<<" dp[i]:"<<dp[i]<<" j:"<<j<<" dp[j]:"<<dp[j]<<endl;
+                    dp[i]=max(dp[i],1+dp[j]);
+                    hash[i]=j;
+                }
+                
+                // cout<<dp[i]<<endl;
+            }
+            
+            if(dp[i]>res)
+            {
+            res=max(res,dp[i]);
+            lastInd=i;
+            }
+        }
+        
+        vector<int>temp;
+        
+        while(lastInd!=hash[lastInd])
+        {
+            temp.push_back(nums[lastInd]);
+            lastInd=hash[lastInd];
+        }
+        
+        reverse(temp.begin(),temp.end());
+        for(auto it: temp)
+        {
+            cout<<it<<" ";
+        }
+        return res;
     }
 };
