@@ -6,7 +6,7 @@ public:
         int n=arr.size();
         vector<int>res(n,-1);
         stack<int>st;
-        for(int i=(2*n-1);i>=0;i--) // O(2n)
+        for(int i=(2*n-2);i>=0;i--) // O(2n)
         {
             while(!st.empty() && arr[i%n]>=st.top()) st.pop();//O(2n)
             
