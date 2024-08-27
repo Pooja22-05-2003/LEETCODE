@@ -3,6 +3,8 @@ public:
     int minimumEffortPath(vector<vector<int>>& mat) {
         int n=mat.size();
         int m=mat[0].size();
+        
+        if(n==1 && m==1) return 0;
         vector<vector<int>>dis(n,vector<int>(m,INT_MAX));
         
         priority_queue<vector<int> ,vector<vector<int>> , greater<vector<int>>> pq;
@@ -41,6 +43,6 @@ public:
             }
         }
         
-        return (dis[n-1][m-1]==INT_MAX)?0:dis[n-1][m-1];
+        return dis[n-1][m-1];
     }
 };
