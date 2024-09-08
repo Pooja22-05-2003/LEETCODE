@@ -9,29 +9,26 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-
-// Iterative Preorder Traversal
-// TC=O(n)
-// SC=O(n) in worst case , when tree skewed and each node have only one right and left(subtree), no right substree
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
-        vector<int>ans; 
-        if(root==NULL) return ans;
+        vector<int>res;
+        if(root==NULL) return res;
         
         stack<TreeNode*>st;
         st.push(root);
         
         while(!st.empty())
         {
-            auto curr=st.top(); st.pop();
-            ans.push_back(curr->val);
+            auto curr=st.top();st.pop();
             
-            if(curr->right) st.push(curr->right); // order is root left right , so if u will push left at last , then only it will come first out.
+            res.push_back(curr->val);
+            
+            if(curr->right) st.push(curr->right);
             if(curr->left) st.push(curr->left);
-        
             
         }
-        return ans;
+        
+        return res;
     }
 };
