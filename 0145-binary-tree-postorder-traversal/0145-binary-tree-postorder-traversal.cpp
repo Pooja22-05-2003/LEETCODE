@@ -9,51 +9,30 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-
-// Postorder using 2 stacks
-// TC=
-// SC=
 class Solution {
 public:
     vector<int> postorderTraversal(TreeNode* root) {
-        vector<int>ans;
-        if(root==NULL) return ans;
+        if(root==NULL) return {};
+        vector<int>res;
+        stack<TreeNode*>st1;
+        stack<TreeNode*>st2;
         
-        stack<TreeNode*>st;
-        
-        TreeNode*curr=root;
-        
-        while(!st.empty() || curr!=NULL)
+        st1.push(root);
+        while(!st1.empty())
         {
-        if(curr!=NULL)
-        {
-            st.push(curr);
-            curr=curr->left;
-        }
-        else
-        {
-            TreeNode* temp=st.top()->right;
-            
-            if(temp==NULL)
-            {
-            temp=st.top();
-            st.pop();
-            ans.push_back(temp->val);
-            
-            while(!st.empty() && temp==st.top()->right)
-            {
-                temp=st.top(); st.pop();
-                ans.push_back(temp->val);
-            }
-            }
-            else
-            {
-                curr=temp;
-            }
-         }
+            auto curr=st1.top();
+            st1.pop();
+            st2.push(curr);
+            if(curr->left) st1.push(curr->left);
+            if(curr->right) st1.push(curr->right);
         }
         
-        return ans;
+        while(st2.size()>0)
+        {
+            res.push_back(st2.top()->val);
+            st2.pop();
+        }
         
+        return res;
     }
 };
