@@ -1,26 +1,20 @@
-// TC=O(4n)
-// SC=O(2n)+O(n)// n is for res
 class Solution {
 public:
-    vector<int> nextGreaterElements(vector<int>& arr) {
-        int n=arr.size();
-        vector<int>res(n,-1);
+    vector<int> nextGreaterElements(vector<int>& nums) {
         stack<int>st;
-        for(int i=(2*n-2);i>=0;i--) // O(2n)
+        
+        for(int i=nums.size()-2;i>=0;i--) st.push(nums[i]);
+        
+        vector<int>res(nums.size(),-1);
+        
+        for(int i=nums.size()-1;i>=0;i--)
         {
-            while(!st.empty() && arr[i%n]>=st.top()) st.pop();//O(2n)
+            while(!st.empty() && st.top()<=nums[i]) st.pop();
+        
+            if(st.empty()) res[i]=-1;
+            else res[i]=st.top();
             
-            if(i<n)
-            {
-                if( st.empty())
-                {
-                    res[i]=-1;
-                }
-                else res[i]=st.top();
-                
-            }
-            
-            st.push(arr[i%n]);
+            st.push(nums[i]);
         }
         
         return res;
