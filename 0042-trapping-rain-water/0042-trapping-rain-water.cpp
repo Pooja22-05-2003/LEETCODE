@@ -1,38 +1,29 @@
-// Two pointer
-// TC=O(n)
-// SC=O(1)
 class Solution {
 public:
-    int trap(vector<int>& arr) {
-        int left=0;
-        int right=arr.size()-1;
+    int trap(vector<int>& height) {
+        int n=height.size();
+        vector<int>prefix(n,0);
+        vector<int>suffix(n,0);
+        prefix[0]=height[0];
+        for(int i=1;i<n;i++)
+        {
+            prefix[i]=max(prefix[i-1],height[i]);
+        }
         
-        int leftmax=INT_MIN;
-        int rightmax=INT_MIN;
+        
+        suffix[n-1]=height[n-1];
+        for(int i=n-2;i>=0;i--)
+        {
+            suffix[i]=max(suffix[i+1],height[i]);
+        }
         
         int res=0;
-        while(left<=right)
+        for(int i=1;i<n-1;i++)
         {
-            if(arr[left]>=arr[right])
-            {
-                // water stored in the right
-                if(arr[right]>=rightmax) rightmax=arr[right];
-                
-                else res+=(rightmax-arr[right]);
-                // cout<<"right"<<(rightmax-arr[right])<<endl;
-                right--;
-            }
-            else
-            {
-                // water stored in the left
-                if(arr[left]>=leftmax) leftmax=arr[left];
-               
-                else res+=(leftmax-arr[left]);
-                cout<<"left:"<<(leftmax-arr[left])<<endl;
-                left++;
-            }
+            res+=min(prefix[i],suffix[i])-height[i];
         }
         
         return res;
+        
     }
 };
