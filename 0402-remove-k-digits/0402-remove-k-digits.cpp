@@ -1,38 +1,30 @@
-// TC=O(n)+O(k)
-// SC=O(n)
 class Solution {
 public:
     string removeKdigits(string num, int k) {
-        if(num.size()==k) return "0";
         
-        stack<int>st;
-        
+        string st="";
         for(int i=0;i<num.size();i++)
         {
-            while(st.size()>0 && st.top()>num[i] && k>0)
+            char el=num[i];
+            
+            while(st.size()>0 && st.back()>el && k>0)
             {
-                st.pop();
+                st.pop_back();
                 k--;
             }
             
-            // push only of the number is non zero, or if it is zero, then it is not preceding zero
-            if(!st.empty() || num[i]!='0') st.push(num[i]);
+            if(st.size()>0 || el!='0') st.push_back(el);
         }
         
-        while(!st.empty() && k>0){
-            st.pop();
+        
+        while(st.size()>0 && k>0) 
+        {
+            st.pop_back();
             k--;
         }
         
-        string res="";
+        if(st=="") return "0";
+        return st;
         
-        while(!st.empty())
-        {
-            res.push_back(st.top());
-            st.pop();
-        }
-        
-        reverse(res.begin(),res.end());
-        return (res=="")?"0":res;
     }
 };
