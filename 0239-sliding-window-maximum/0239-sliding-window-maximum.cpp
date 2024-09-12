@@ -13,7 +13,7 @@ public:
             dq.push_back(i);
             
             
-            if(i-k>=-1)
+            if(i>=k-1)
             {
                 res.push_back(nums[dq.front()]);
             }
