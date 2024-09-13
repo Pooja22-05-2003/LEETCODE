@@ -1,55 +1,36 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
-        vector<int>mp(255,0);
         int n=s.size();
+        int res=0;
+        int maxlen=0;
+        
         int i=0;
         int j=0;
-        int res=0;
-        int maxlen=INT_MIN;
+        
+        unordered_map<int,int>mp;
         while(j<n)
         {
-              mp[s[j]]++;
+            mp[s[j]]++;
+            maxlen=max(maxlen,mp[s[j]]);
             
-              maxlen=max(maxlen,mp[s[j]]);
-              // cout<<"j:"<<j<<" maxlen:"<<maxlen<<endl;
-            
-            // window is from i to j
-            
-            
-                while(((j-i+1)-maxlen)>k)
+            while(i<=j && ((j-i+1)-maxlen)>k)
+            {
+                mp[s[i]]--;
+                if(mp[s[i]]==0) mp.erase(s[i]);
+                i++;
+                
+                for(auto it:mp)
                 {
-                    // cout<<"jj:"<<j<<" ii:"<<i<<endl;
-                    mp[s[i]]--;
-                    i++;
-                    for(int k=0;k<255;k++)
-                    {
-                        maxlen=max(maxlen,mp[k]);
-                    }
+                    maxlen=max(maxlen,it.second);
                 }
-        
-                res=max(res,((j-i+1)));
-                // cout<<"j:"<<j<<" res:"<<res<<endl;
-                j++;
+                
+            }
             
+            res=max(res,(j-i+1));
+            j++;
         }
         
         return res;
     }
-    
-    
-    /*
-    A  B  A  B
-    0  1  2  3
-    i
-          j
-    
-    maxlen=2 , res=3
-    
-    
-    arr A=2,
-        B=2,
-    
-    
-    */
 };
