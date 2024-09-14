@@ -1,89 +1,70 @@
-// ⭐⭐
-/*
-Time Complexity: O(N) + O(M) + O(NxMx4) ~ O(N x M), For the worst case, every element will be marked as ‘O’ in the matrix, and the DFS function will be called for (N x M) nodes and for every node, we are traversing for 4 neighbors, so it will take O(N x M x 4) time. Also, we are running loops for boundary elements so it will take O(N) + O(M).
-
-Space Complexity ~ O(N x M), O(N x M) for the visited array, and auxiliary stack space takes up N x M locations at max. 
+// Mark all those 'O'-->'X' if that  'O' region [region is connection of every cell] is not touched with the boundaries
 
 
-*/
+
 class Solution {
 public:
-    void dfs(int i, int j, vector<vector<char>>& board, vector<vector<int>>&vis)
+    
+    void dfs(int r, int c, vector<vector<int>>&vis , vector<vector<char>>& board)
     {
-        int m=board.size(); int n=board[0].size();
-        // if(i<0 || i>=m || j<0 || j>=n) return ;
-
-        int adjr[4]={-1,0,1,0};
-        int adjc[4]={0,1,0,-1};
-
-        vis[i][j]=1; // mark visited the current cell
-        for(int k=0;k<4;k++)
-        {
-            int r=i+adjr[k];
-            int c=j+adjc[k];
-            if(r<0 || r>=m || c<0 || c>=n) continue;// Here, u need to check this condition, else if without checking u will acess invalid index, it will give runtime error.
-            else if (!vis[r][c] && board[r][c]=='O') dfs(r,c,board,vis);
-        }
-
-
-    }
-    void solve(vector<vector<char>>& board) {
         int m=board.size();
         int n=board[0].size();
-        vector<vector<int>>vis(m, vector<int>(n,0));
-        if(n==1) 
+        vis[r][c]=1;
+        
+        pair<int,int> dir[4]={{0,-1},{-1,0},{0,1},{1,0}};
+        for(int i=0;i<4;i++)
         {
-            return ;
-        }
-        //iterate first row and last row boundary '0' elements
-        for(int j=0;j<n;j++)
-        {   
-            if(board[0][j]=='O' && !vis[0][j])
+            int nr=r+dir[i].first;
+            int nc=c+dir[i].second;
+            
+            if(nr>=0 && nr<m && nc>=0 && nc<n && vis[nr][nc]==0 && board[nr][nc]=='O')
             {
-                dfs(0,j,board,vis);
+                dfs(nr,nc,vis,board);
             }
         }
-
-        if(m>1){
-        for(int j=0;j<n;j++)
+    }
+    void solve(vector<vector<char>>& board) {
+        int n=board.size();
+        int m=board[0].size();
+        vector<vector<int>>vis(n,vector<int>(m,0));
+        
+        // first row
+        for(int j=0;j<m;j++)
         {
-            if(board[m-1][j]=='O' && !vis[m-1][j])
+            if(board[0][j]=='O' && vis[0][j]==0) dfs(0,j,vis,board);
+        }
+        
+        // iterate last row
+        if(m>1)
+        {
+            for(int j=0;j<m;j++)
             {
-                dfs(m-1,j,board,vis);
+                if(board[n-1][j]=='O' && vis[n-1][j]==0) dfs(n-1,j,vis,board);
             }
         }
-        }
-
-        // iterate first col boundary and its'0' elements
-        for(int i=0;i<m;i++)
+        
+        // iterate first col
+        for(int i=0;i<n;i++)
         {
-             if(board[i][0]=='O' && !vis[i][0])
+            if(board[i][0]=='O' && vis[i][0]==0) dfs(i,0,vis,board);
+        }
+        
+        if(m>1)
+        {
+            for(int i=0;i<n;i++)
             {
-                dfs(i,0,board,vis);
+                if(board[i][m-1]=='O' && vis[i][m-1]==0) dfs(i,m-1,vis,board);
             }
         }
-
-        // iterate last col boundary and its'0' elements
-        if(n>1){
-        for(int i=0;i<m;i++)
+        
+        for(int i=0;i<n;i++)
         {
-             if(board[i][n-1]=='O' && !vis[i][n-1])
+            for(int j=0;j<m;j++)
             {
-                dfs(i,n-1,board,vis);
+                if(vis[i][j]==0 && board[i][j]=='O') board[i][j]='X';
             }
         }
-        }
-
-
-        for(int i=0;i<m;i++)
-        {
-            for(int j=0;j<n;j++)
-            {
-                if(board[i][j]=='O' && !vis[i][j]) board[i][j]='X';
-            }
-        }
-
+        
         // return board;
-
     }
 };
