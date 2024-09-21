@@ -1,55 +1,49 @@
 class Solution {
 public:
-    bool check(int kk, vector<int>& arr, int m, int k)
+    bool check(int day, vector<int>&arr, int m, int k)
     {
         int cnt=0;
-        int continuos=0;
+        int continuous=0;
         for(int i=0;i<arr.size();i++)
         {
-            if(arr[i]<=kk) 
+            if(arr[i]<=day)
             {
-                continuos++;
-                if(continuos==k)
-               {
-                    
-                cnt++;
-                continuos=0;
-               }
+                continuous++;
             }
-            else continuos=0;
+            else continuous=0;
             
+            if(continuous==k) 
+            {
+                cnt++;
+                continuous=0;
+            }
         }
-        // cout<<"i:"<<kk<<" cnt:"<<cnt<<endl;
-        return (cnt>=m);
+        
+        if(cnt>=m) return true;
+        else return false;
     }
-    
-    
     int minDays(vector<int>& arr, int m, int k) {
-        int n=arr.size();
-         // long long int temp=m*k;
-        // if((temp)>n) return -1;
-       
-        int minn=INT_MAX;
-        int maxx=INT_MIN;
+        int min_el=INT_MAX;
+        int max_el=INT_MIN;
         
-        for(auto el: arr)
+        for(auto el:arr)
         {
-            minn=min(minn,el);
-            maxx=max(maxx,el);
+            min_el=min(min_el,el);
+            max_el=max(max_el,el);
         }
         
-        int st=minn;
-        int end=maxx;
+        int st=min_el;
+        int end=max_el;
         
         while(st<=end)
         {
             int mid=(st+end)/2;
-            // cout<<"mid:"<<mid<<" st:"<<st<<" end:"<<end<<endl;
-            if(mid==1 && check(mid,arr,m,k)==true) return mid;
+            
             if(check(mid,arr,m,k)==true && check(mid-1,arr,m,k)==false) return mid;
-            if(check(mid,arr,m,k)==true) end=mid-1;
-            else st=mid+1;
-        }  
-        return -1;    
+            if(check(mid,arr,m,k)==false) st=mid+1;
+            else end=mid-1;
+        }
+        
+        return -1;
     }
 };
