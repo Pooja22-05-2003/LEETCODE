@@ -1,69 +1,48 @@
-// TC=O(nlog(sum))
-// SC=O(1)
 class Solution {
 public:
-    bool check(int c, vector<int>wt, int days)
+    bool check(int maxsum, vector<int>arr, int days)
     {
-        // cout<<"c:"<<c<<endl;
         int cnt=1;
         
-        int s=0;
-        for(int i=0;i<wt.size();i++)
+        int sum=0;
+        
+        for(auto el:arr)
         {
-            if(c<wt[i]) return false; // ⭐⭐Edge case:-each package wt must be smaller than capacity then only we can pick that element.
-            if((s+wt[i])<=c) 
-            {
-                s+=wt[i];
-            }  
+            sum+=el;
+            if(el>maxsum) return false;
+            if(sum<=maxsum){
+               continue; 
+            }
             else
             {
+                sum=el;
                 cnt++;
-                if(cnt>days) break;
-                s=wt[i]; // ⭐⭐Here i did wrong by initializing the s with 0, but it should be initilized with that number.
             }
             
-            // cout<<"i:"<<i<<" cnt:"<<cnt<<endl;
-            
-            
+            if(cnt>days) break;
         }
         
-        // if(s!=0) cnt++;
-        
-        
-        if(cnt<=days) return true;
-        else return false;
+        return (cnt<=days);
     }
-    int shipWithinDays(vector<int>& weights, int days) {
-        int ans=INT_MAX;
-        
+    int shipWithinDays(vector<int>& arr, int days) {
         int sum=0;
-        int minEl=INT_MAX;
-        for(auto it: weights) sum+=it;
-        
-        for(int i=0;i<weights.size();i++) 
+        for(auto el:arr) 
         {
-            minEl=min(minEl,weights[i]);
-            sum+=weights[i];
+            sum+=el;
         }
         
-        // for(int i=minEl;i<=sum;i++)
-        // {
-        //     if(check(i,weights,days)==true) return i;
-        // }
-        
-        int st=minEl;
+        int st=1;
         int end=sum;
         
         while(st<=end)
         {
             int mid=(st+end)/2;
             
-            if(mid-1==0 && check(mid,weights,days)==true) return mid;
-            if(check(mid,weights,days)==true && check(mid-1,weights,days)==false) return mid;
-            if(check(mid,weights,days)==true) end=mid-1;
+            if(check(mid,arr,days)==true && check(mid-1,arr,days)==false) return mid;
+            else if(check(mid,arr,days)==true) end=mid-1;
             else st=mid+1;
         }
         
-        return sum;
+        return -1;
     }
 };
