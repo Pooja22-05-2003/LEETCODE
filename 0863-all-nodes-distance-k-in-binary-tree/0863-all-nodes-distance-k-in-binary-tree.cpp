@@ -15,7 +15,7 @@ public:
         preorder(mp,root,NULL);
         
         queue<pair<TreeNode*,int>>q;
-        vis.insert(target);
+        vis.insert(target); //✨✨forgot to add this and that why getting the wrong ans
         q.push({target,0});
         
         vector<int>res;
