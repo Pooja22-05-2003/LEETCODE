@@ -4,24 +4,23 @@ public:
     int uniquePaths(int m, int n) {
         vector<vector<int>>dp(m,vector<int>(n,0));
         
-      
         
-        for(int row=0;row<m;row++)
-        {
-            for(int col=0;col<n;col++)
-            {
-                if(row==0 && col==0)   dp[0][0]=1;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(i==0 && j==0) dp[i][j]=1;
                 else{
-                int up=0;
-                int left=0;
-                if(row-1>=0) up=dp[row-1][col];
-                if(col-1>=0) left=dp[row][col-1];
-                dp[row][col]=up+left;
+                    
+                    int up=0;
+                    int left=0;
+                    
+                    if(i-1>=0) up=dp[i-1][j];
+                    if(j-1>=0) left=dp[i][j-1];
+                    
+                    dp[i][j]=up+left;
                 }
-                // cout<<"r:"<<row<<" c:"<<col<<" dp[i][j]:"<<dp[row][col]<<endl;
             }
         }
-            
+        
         return dp[m-1][n-1];
     }
 };
