@@ -1,30 +1,28 @@
-// TC=O(N)
-// SC=O(1)
-
-
-// Eliminating the k loop.
 class Solution {
 public:
-    int longestOnes(vector<int>& s, int k) {
-        int n=s.size();
-        int maxlen=0;
-        int j=0;
+    int longestOnes(vector<int>& nums, int k) {
+        int n=nums.size();
         int i=0;
-        
-        while(j<n)
-        {
-            if(s[j]==0) k--;
+        int j=0;
+        int cnt1=0;
+        int res=0;
+        while(j<n){
             
-            while(i<j && k<0)
-            {
-                if(s[i]==0) k++;
-                i++;
+            if(nums[j]==0) cnt1++;
+            
+            while(cnt1>k){
+                if(nums[i]==0){
+                    cnt1--;
+                   
+                }
+                
+                 i++;
             }
             
-            if(k>=0)  maxlen=max(maxlen,(j-i+1));
+            res=max(res,(j-i+1));
             j++;
         }
         
-        return maxlen;
+        return res;
     }
 };
