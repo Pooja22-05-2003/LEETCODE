@@ -1,28 +1,27 @@
 class Solution {
 public:
-    int maxScore(vector<int>& cardPoints, int k) {
-        int cnt=k;
+    int maxScore(vector<int>& arr, int k) {
+        int n=arr.size();
         int res=0;
-        int n=cardPoints.size();
         int sum=0;
-        int j;
-        for( j=n-1;j>=0;j--)
-        {
-            if(k>0) sum+=cardPoints[j];
-            else break;
+        
+        for(int i=0;i<k;i++) sum+=arr[i];
+        res=sum;
+        int cnt=1;
+        int j=n-1;
+        int i=k-1;
+        while(cnt<=k){
             
+            sum-=arr[i];
+            // cout<<"summ:"<<sum<<endl;
+            sum+=arr[j];
+            // cout<<"sum:"<<sum<<endl;
             res=max(res,sum);
-            k--;
+            cnt++;
+            i--;
+            j--;
         }
         
-        j++;
-        for(int i=0;i<cnt;i++)
-        {
-           sum-=cardPoints[j];
-           j++;
-           sum+=cardPoints[i];
-           res=max(res,sum);
-        }
         return res;
     }
 };
